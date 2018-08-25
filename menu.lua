@@ -1,25 +1,37 @@
-local current_menu_state
-local current_menu_state_string
+local world = require "world"
+local level = require "level"
+
+local current_menu_state = 1
+local current_menu_state_string = "level1"
 
 local menu = {}
+local world
 
-function menu.init_menu()
-	print("initialized menu")
-	current_menu_state = 0
-    current_menu_state_string = "test0"
+local switch_to_level = false
+
+local levelfiles = {"level0.txt", "level1.txt"}
+
+function menu.init_menu(w) 
+    print("initializing menu...")
+    world = w
 end
 
 function menu.update_menu(dt)
-    if current_menu_state == 0 then
-        current_menu_state_string = "test0"
-    elseif current_menu_state == 1 then
+    if current_menu_state == 1 then
         current_menu_state_string = "test1"
+    elseif current_menu_state == 2 then
+        current_menu_state_string = "test2"
     end
-    if current_menu_state < 0 then
-        current_menu_state = 0
-    elseif current_menu_state > 1 then
+    if current_menu_state < 1 then
         current_menu_state = 1
+    elseif current_menu_state > 2 then
+        current_menu_state = 2
     end
+
+    if switch_to_level == true then
+        return true
+    end
+    return false
 end
 
 function menu.draw_menu()
@@ -36,6 +48,10 @@ function menu.keyPressed(key)
         current_menu_state = current_menu_state - 1
     elseif key == "up" then
         current_menu_state = current_menu_state + 1
+    elseif key == "return" then
+        print("loading level...")
+        world.generate(level.load(levelfiles[current_menu_state]))
+        switch_to_level = true
     end
 end
 
