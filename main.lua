@@ -9,7 +9,7 @@ local inMenu = true;
 function love.load(arg)
     love.window.setMode(600, 400, {resizable=true, vsync=false, minwidth=400, minheight=300, msaa=4})
 
-    menu.init_menu()
+    menu.init_menu(world)
     world.generate(level.load(levelfiles[2]))
 end
 
@@ -23,7 +23,8 @@ end
 
 function love.update(dt)
     if inMenu then
-        menu.update_menu(dt)
+        if menu.update_menu(dt) == true then
+            inMenu = false 
     else
         world.LoveWorld:update(dt)
     end
