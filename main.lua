@@ -19,9 +19,8 @@ function love.update(dt)
             inMenu = false
         end
     else
-        world.LoveWorld:update(dt)
 
-        world.player.update(dt)
+        world.update(dt)
     end
 end
 

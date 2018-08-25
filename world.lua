@@ -33,7 +33,9 @@ function world.generate(level)
     return w
 end
 
-function world.player.update(dt)
+function world.update(dt)
+    world.LoveWorld:update(dt)
+
     if love.keyboard.isDown("right") then
         world.player.body:applyForce(1000, 0)
     elseif love.keyboard.isDown("left") then
