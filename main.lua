@@ -2,13 +2,15 @@ local world = require "world"
 local level = require "level"
 local menu = require "menu"
 
-local w
+local levelfiles = {"level0.txt", "level1.txt"}
+local inMenu = true;
+
 
 function love.load(arg)
     love.window.setMode(600, 400, {resizable=true, vsync=false, minwidth=400, minheight=300, msaa=4})
 
     menu.init_menu()
-    w = world.generate(level.load("test.txt"))
+    world.generate(level.load(levelfiles[2]))
 end
 
 function love.keypressed(key, scancode, isrepeat)
@@ -20,18 +22,23 @@ function love.keypressed(key, scancode, isrepeat)
 end
 
 function love.update(dt)
-    w.LoveWorld:update(dt)
-    menu.update_menu(dt)
+    if inMenu then
+        menu.update_menu(dt)
+    else
+        world.LoveWorld:update(dt)
+    end
 end
 
 function love.draw()
-    love.graphics.polygon("fill", w.player.body:getWorldPoints(w.player.shape:getPoints()))
-    for i = 1, #(w.ground) do
-        love.graphics.polygon("fill", w.ground[i].body:getWorldPoints(w.ground[i].shape:getPoints()))
+    if inMenu then
+        menu.draw_menu()
+    else
+        love.graphics.polygon("fill", world.player.body:getWorldPoints(world.player.shape:getPoints()))
+        for i = 1, #(world.ground) do
+            love.graphics.polygon("fill", world.ground[i].body:getWorldPoints(world.ground[i].shape:getPoints()))
+        end
+        love.graphics.print("Hello World", 400, 300)
     end
-    love.graphics.print("Hello World", 400, 300)
-
-    menu.draw_menu()
 end
 
 function love.keypressed(key)
