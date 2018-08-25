@@ -3,14 +3,14 @@ local level = require "level"
 local menu = require "menu"
 
 local levelfiles = {"level0.txt", "level1.txt"}
-local inMenu = true;
+local inMenu = false;
 
 
 function love.load(arg)
     love.window.setMode(600, 400, {resizable=true, vsync=false, minwidth=400, minheight=300, msaa=4})
 
     menu.init_menu()
-    world.generate(level.load(levelfiles[2]))
+    world.generate(level.load(levelfiles[1]))
 end
 
 function love.update(dt)
@@ -18,6 +18,8 @@ function love.update(dt)
         menu.update_menu(dt)
     else
         world.LoveWorld:update(dt)
+
+        world.player.update(dt)
     end
 end
 
@@ -35,7 +37,7 @@ end
 
 function love.keypressed(key)
     menu.keyPressed(key)
-    
+
     if key == "escape" then
         love.event.quit()
     end

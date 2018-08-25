@@ -1,10 +1,10 @@
 local world = {isInitialized = false}
 
+local player = {}
+world.player = player
+
 function world.generate(level)
     world.LoveWorld = love.physics.newWorld(0, 200, true)
-
-    player = {}
-    world.player = player
 
     player.body = love.physics.newBody(world.LoveWorld, 64, 64, "dynamic")
     player.shape = love.physics.newRectangleShape(64, 64)
@@ -31,6 +31,14 @@ function world.generate(level)
     end
 
     return w
+end
+
+function world.player.update(dt)
+    if love.keyboard.isDown("right") then
+        world.player.body:applyForce(1000, 0)
+    elseif love.keyboard.isDown("left") then
+        world.player.body:applyForce(-1000, 0)
+    end
 end
 
 return world
