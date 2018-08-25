@@ -7,15 +7,16 @@ local current_menu_state_string = "level1"
 local menu = {}
 local world
 
-local inMenu = true
+local switch_to_level = false
 
 local levelfiles = {"level0.txt", "level1.txt"}
 
 function menu.init_menu(w) 
+    print("initializing menu...")
     world = w
 end
 
-function menu.update_menu(dt, iM)
+function menu.update_menu(dt)
     if current_menu_state == 1 then
         current_menu_state_string = "test1"
     elseif current_menu_state == 2 then
@@ -26,7 +27,11 @@ function menu.update_menu(dt, iM)
     elseif current_menu_state > 2 then
         current_menu_state = 2
     end
-    iM = inMenu
+
+    if switch_to_level == true then
+        return true
+    end
+    return false
 end
 
 function menu.draw_menu()
@@ -35,19 +40,15 @@ function menu.draw_menu()
     love.graphics.print(current_menu_state_string, 300, 200)
 end
 
-function load_level()
-
-end
-
 function menu.keyPressed(key)
     if key == "down" then
         current_menu_state = current_menu_state - 1
     elseif key == "up" then
         current_menu_state = current_menu_state + 1
-    elseif key == "enter" then
-        current_menu_state_string = "loading level..."
+    elseif key == "return" then
+        print("loading level...")
         world.generate(level.load(levelfiles[current_menu_state]))
-        inMenu = false
+        switch_to_level = true
     end
 end
 

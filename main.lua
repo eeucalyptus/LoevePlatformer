@@ -25,6 +25,7 @@ function love.update(dt)
     if inMenu then
         if menu.update_menu(dt) == true then
             inMenu = false 
+        end
     else
         world.LoveWorld:update(dt)
     end
