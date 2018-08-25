@@ -29,6 +29,7 @@ function menu.update_menu(dt)
     end
 
     if switch_to_level == true then
+        switch_to_level = false
         return true
     end
     return false
