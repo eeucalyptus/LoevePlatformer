@@ -13,14 +13,6 @@ function love.load(arg)
     world.generate(level.load(levelfiles[2]))
 end
 
-function love.keypressed(key, scancode, isrepeat)
-    world.keyPressed(key)
-
-    if key == "a" then
-        love.graphics.print("test", 100, 100)
-    end
-end
-
 function love.update(dt)
     if inMenu then
         if menu.update_menu(dt) == true then
@@ -45,6 +37,7 @@ end
 
 function love.keypressed(key)
     menu.keyPressed(key)
+    
     if key == "escape" then
         love.event.quit()
     end

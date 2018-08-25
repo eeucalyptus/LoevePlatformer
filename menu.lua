@@ -37,7 +37,10 @@ end
 function menu.draw_menu()
     love.graphics.setColor(1, 1, 1)
 
-    love.graphics.print(current_menu_state_string, 300, 200)
+	width = love.graphics.getFont():getWidth( current_menu_state_string )
+	x = math.floor((love.graphics.getWidth() - width) / 2)
+	y = math.floor(love.graphics.getHeight() / 2)
+    love.graphics.print(current_menu_state_string, x, y)
 end
 
 function menu.keyPressed(key)
