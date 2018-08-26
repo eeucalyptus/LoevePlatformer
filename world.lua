@@ -1,6 +1,9 @@
 local world = {isInitialized = false}
 
 local player = {}
+
+local back_to_menu = false
+
 world.player = player
 
 function world.generate(level)
@@ -41,6 +44,18 @@ function world.update(dt)
     elseif love.keyboard.isDown("left") then
         world.player.body:applyForce(-1000, 0)
     end
+    
+    if back_to_menu == true then
+        back_to_menu = false
+        return true
+    end
+    return false
+end
+
+function world.keyPressed(key)
+    if key == "escape" then
+        back_to_menu = true
+    end 
 end
 
 return world

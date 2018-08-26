@@ -7,7 +7,7 @@ local levelfiles = {"level0.txt", "level1.txt"}
 
 local inMenu = true
 
-local oldHero = animation.newAnimation(love.graphics.newImage("assets/oldHero.png"), 16, 18, 1)
+local oldHero = animation.newAnimation(love.graphics.newImage("assets/oldHero.png"), 16, 18, 1, 4)
 local animations = {}
 
 function love.load(arg)
@@ -34,13 +34,19 @@ function love.draw()
     if inMenu then
         menu.draw_menu()
     else
-        pos = {0, 0}
-        animation.draw_animation(pos, oldHero)
+       
+
         love.graphics.polygon("fill", world.player.body:getWorldPoints(world.player.shape:getPoints()))
         for i = 1, #(world.ground) do
             love.graphics.polygon("fill", world.ground[i].body:getWorldPoints(world.ground[i].shape:getPoints()))
         end
         love.graphics.print("Hello World", 400, 300)
+        
+        x, y = world.player.body:getPosition()
+        print(x)
+        print(y)
+        pos = {x, y}
+        animation.draw_animation(x - 32, y - 32, oldHero)
     end
 end
 

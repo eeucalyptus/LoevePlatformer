@@ -1,8 +1,9 @@
 local animation = {}
 
-function animation.newAnimation(image, width, height, duration)
+function animation.newAnimation(image, width, height, duration, scale)
     local spriteAnimation = {}
     spriteAnimation.spriteSheet = image
+    spriteAnimation.scale = scale
     spriteAnimation.quads = {}
     
     print(image:getHeight())
@@ -13,8 +14,6 @@ function animation.newAnimation(image, width, height, duration)
         end
     end
     
-    print(#spriteAnimation.quads)
-
     spriteAnimation.duration = duration or 1
     spriteAnimation.currentTime = 0
 
@@ -28,10 +27,9 @@ function animation.update_animation(dt, anim)
     end
 end
 
-function animation.draw_animation(pos, anim)
-    print(#anim.quads)
+function animation.draw_animation(x, y, anim)
     local spriteNum = math.floor(anim.currentTime / anim.duration * #anim.quads) + 1
-    love.graphics.draw(anim.spriteSheet, anim.quads[spriteNum], 0, 0, 0, 1)
+    love.graphics.draw(anim.spriteSheet, anim.quads[spriteNum], x, y, 0, anim.scale)
 end
 
 return animation
